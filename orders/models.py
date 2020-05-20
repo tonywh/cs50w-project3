@@ -1,54 +1,102 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class User(models.Model):
-    first = models.CharField(max_length=64)
-    last = models.CharField(max_length=64)
-
-    def __str__(self):
-        return f"{self.id} {self.first} {self.last}"
-
-class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name="orders")
-    time = models.DateTimeField()
+#
+# Model for Sub extras
+#
+class SubExtra(models.Model):
+    name = models.CharField(max_length=128)
+    price = models.FloatField()
 
     def __str__(self):
-        return f"{self.id} {self.time} {self.user}"
+        return f"{self.name}"
 
-class Option(models.Model):
+#
+# Model to characterise simple products
+#
+class Product(models.Model):
+    name = models.CharField(max_length=128)
+    price = models.FloatField()
+
+    def __str__(self):
+        return f"{self.name}"
+
+#
+# Model for pizza toppings
+#
+class PizzaTopping(models.Model):
     name = models.CharField(max_length=128)
 
     def __str__(self):
         return f"{self.name}"
 
-class OptionValue(models.Model):
+#
+# Model to characterise pizzas
+#
+class Pizza(models.Model):
     name = models.CharField(max_length=128)
-    option = models.ForeignKey(Option, on_delete=models.PROTECT, related_name='values')    # the option it belongs to
-    visibleOptions = models.IntegerField()      # number of additional option fields this value should make visible
-                                                # blank means all
-    def __str__(self):
-        return f"{self.name} for option {self.option}, visisble options: {self.visibleOptions}"
-
-class Product(models.Model):
-    name = models.CharField(max_length=128)
-    price = models.FloatField()
-    options = models.ManyToManyField(Option, blank=True)
+    price0 = models.FloatField()
+    price1 = models.FloatField()
+    price2 = models.FloatField()
+    price3 = models.FloatField()
+    priceSpecial = models.FloatField()
 
     def __str__(self):
-        return f"{self.name} {self.price}"
+        return f"{self.name}"
 
-class OptionPrice(models.Model):
-    price = models.FloatField()
-    optionValue = models.ForeignKey(OptionValue, on_delete=models.PROTECT, related_name='optionPrice')
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='optionPrice')
+#
+# Model for a Pizza item in an order.
+# Rows in this table are Pizza items in an order
+#
+class PizzaItem(models.Model):
+    pizza = models.ForeignKey(Pizza, on_delete=models.PROTECT)
+    toppings = models.ManyToManyField(PizzaTopping, blank=True)
 
     def __str__(self):
-        return f"{self.optionValue} {self.price} for product {self.product}"
+        return f"{self.pizza.name}"
 
+#
+# Model for a Sub item in an order.
+# Rows in this table are Sub items in an order
+#
+class SubItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    extras = models.ManyToManyField(SubExtra, blank=True)
+
+    def __str__(self):
+        return f"{self.sub.name}"
+
+#
+# Model for a Simple item in an order.
+# Rows in this table are simple items in an order, i.e. any type of item that
+# has no options.
+#
+class SimpleItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.item.name}"
+
+#
+# Model for an Order. One-to-many relationship with OrderItem.
+#
+class Order(models.Model):
+    user = models.ForeignKey(User,  on_delete=models.PROTECT)
+    time = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.id} {self.time} {self.user}"
+
+#
+# Items that are part of an order.
+# Rows in this table are items in an order.
+# In each row, leave all ...Item fields blank except one.
+#
 class OrderItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="orders")
-    optionsValue = models.ManyToManyField(OptionValue, blank=True)
+    pizzaItem = models.ForeignKey(PizzaItem, blank=True, null=True, on_delete=models.PROTECT)
+    subItem = models.ForeignKey(SubItem, blank=True, null=True, on_delete=models.PROTECT)
+    simpleItem = models.ForeignKey(SimpleItem, blank=True, null=True, on_delete=models.PROTECT)
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="items")
 
     def __str__(self):
-        return f"{self.product}"
-
+        return f"{self.pizzaItem} {self.subItem} {self.simpleItem} "
