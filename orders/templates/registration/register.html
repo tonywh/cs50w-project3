@@ -1,0 +1,16 @@
+{% extends "orders/base.html" %}
+
+{% block body %}
+
+{% if form.errors %}
+<p>Your passwords didn't match or did not fit the minimum criteria. Please try again.</p>
+{% endif %}
+
+<h2>Sign up</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign up</button>
+</form>
+
+{% endblock %}

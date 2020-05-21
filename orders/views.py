@@ -1,28 +1,30 @@
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
 def index(request):
     if not request.user.is_authenticated:
-        return render(request, "orders/login.html", {"message": None})
+        return HttpResponseRedirect("accounts/login")
     context = {
         "user": request.user
     }
     return render(request, "orders/user.html", context)
 
-def login_view(request):
-    username = request.POST["username"]
-    password = request.POST["password"]
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        return HttpResponseRedirect(reverse("index"))
+def register(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect("/")
     else:
-        return render(request, "orders/login.html", {"message": "Invalid credentials."})
+        form = UserCreationForm()
 
-def logout_view(request):
-    logout(request)
-    return render(request, "orders/login.html", {"message": "Logged out."})
+    return render(request, "registration/register.html", {'form': form})
