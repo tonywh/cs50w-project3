@@ -2,6 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 
 #
+# Model for a category
+# Intended to categorise products
+#
+class Category(models.Model):
+    name = models.CharField(max_length=128)
+
+    def __str__(self):
+        return f"{self.name}"
+
+#
 # Model for Sub extras
 #
 class SubExtra(models.Model):
@@ -15,6 +25,19 @@ class SubExtra(models.Model):
 # Model to characterise simple products
 #
 class Product(models.Model):
+    name = models.CharField(max_length=128)
+    price = models.FloatField()
+    categories = models.ManyToManyField(Category, blank=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+#
+# Model to characterise subs.
+# This is distinct from simple products so that the app knows which
+# that these can have sub extras.
+#
+class Sub(models.Model):
     name = models.CharField(max_length=128)
     price = models.FloatField()
 
