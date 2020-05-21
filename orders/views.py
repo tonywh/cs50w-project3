@@ -12,7 +12,7 @@ def index(request):
     context = {
         "user": request.user
     }
-    return render(request, "orders/user.html", context)
+    return render(request, "orders/menu.html", context)
 
 def register(request):
     if request.method == "POST":
