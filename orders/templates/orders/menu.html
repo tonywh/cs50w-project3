@@ -1,26 +1,30 @@
 {% extends "orders/base.html" %}
 
 {% block head %}
-{% load static %}
-<link rel="stylesheet" href="{% static "menu.css" %}">
-<script src="{% static "menu.js" %}"></script>
+  {% load static %}
+  <link rel="stylesheet" href="{% static "menu.css" %}">
+
+  <script id="menutab" type="text/x-handlebars-template">
+    {% verbatim %}
+      <a class="nav-item nav-link" value="{{ name }}" href="#">{{ name }}</a>
+    {% endverbatim %}
+  </script>
+
+  <script id="menudetail" type="text/x-handlebars-template">
+    {% verbatim %}
+      <div class="tab-detail" value="{{ name }}">
+        <h3>{{ name }}</h3>
+      </div>
+    {% endverbatim %}
+  </script>
+
+  <script src="{% static "menu.js" %}"></script>
+
 {% endblock %}
 
 {% block body %}
-<nav class="nav nav-tabs">
-  <a class="nav-item nav-link" value="Pizza" href="#">Pizza</a>
-  <a class="nav-item nav-link" value="Subs" href="#">Subs</a>
-  <a class="nav-item nav-link" value="Pasta" href="#">Pasta</a>
-  <a class="nav-item nav-link" value="Salads" href="#">Salads</a>
-  <a class="nav-item nav-link" value="Platters" href="#">Platters</a>
-</nav>
-
-<div id="menu-detail">
-  <div class="menu-detail" value="Pizza">Pizza info</div>
-  <div class="menu-detail" value="Subs">Subs info</div>
-  <div class="menu-detail" value="Pasta">Pasta info</div>
-  <div class="menu-detail" value="Salads">Salads info</div>
-  <div class="menu-detail" value="Platters">Platters info</div>
-</div>
-
+  <nav class="nav nav-tabs" id="tabs">
+  </nav>
+  <div id="tabs-detail">
+  </div>
 {% endblock %}

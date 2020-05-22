@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 #
 class Category(models.Model):
     name = models.CharField(max_length=128)
+    display_order = models.IntegerField()
 
     def __str__(self):
         return f"{self.name}"
