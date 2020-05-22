@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function showTab(tabName) {
   // Make all tabs inactive except the selected tab
-  document.querySelectorAll('.nav-tabs .nav-link').forEach( item => {
+  document.querySelectorAll('#tabs .nav-link').forEach( item => {
     if ( item.getAttribute("value") == tabName ) {
       item.classList.add("active");
     } else {
@@ -48,10 +48,10 @@ function getMenus() {
     });
 
     // Make first tab active
-    showTab(document.querySelector('.nav-tabs .nav-link').getAttribute("Value"));
+    showTab(document.querySelector('#tabs .nav-link').getAttribute("Value"));
 
     // Set the tab onclick listeners
-    document.querySelectorAll('.nav-tabs .nav-link').forEach( item => {
+    document.querySelectorAll('#tabs .nav-link').forEach( item => {
       item.onclick = function() {
         showTab( this.getAttribute("value") );
       };
