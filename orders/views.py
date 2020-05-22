@@ -35,5 +35,22 @@ def menus(request):
     if request.method == "GET":
         raise Http404("Page does not exist")
     categories = Category.objects.order_by("display_order").values()
-    return JsonResponse(list(categories), safe=False)
+    data = { "menus": list(categories)}
 
+    for menu in data["menus"]:
+        if menu["name"] == "Pizza":
+            data[menu["name"]] = getPizzaDetails()
+        elif menu["name"] == "Subs":
+            data[menu["name"]] = getSubsDetails()
+        else:
+            data[menu["name"]] = getProductDetails(menu["name"])
+    return JsonResponse(data, safe=False)
+
+def getPizzaDetails():
+    return list(Pizza.objects.values())
+
+def getSubsDetails():
+    return list(Sub.objects.values())
+
+def getProductDetails(category):
+    return list(Product.objects.filter(categories__name=category).values())

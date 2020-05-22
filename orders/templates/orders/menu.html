@@ -13,7 +13,9 @@
   <script id="menudetail" type="text/x-handlebars-template">
     {% verbatim %}
       <div class="tab-detail" value="{{ name }}">
-        <h3>{{ name }}</h3>
+        {{#each items}}
+          <a href="#" value="{{ this.id }}">{{ this.name }}</a><br>
+        {{/each}}
       </div>
     {% endverbatim %}
   </script>

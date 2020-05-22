@@ -35,16 +35,15 @@ function getMenus() {
     // Create tabs
     tabs = document.querySelector("#tabs")
     tabs.innerHTML = "";
-    console.log(data);
-    data.forEach( menu => {
+    data.menus.forEach( menu => {
       tabs.innerHTML += menutab_template({name: menu.name});
     });
 
     // Create menus
     detail = document.querySelector("#tabs-detail")
     detail.innerHTML = "";
-    data.forEach( menu => {
-      detail.innerHTML += menudetail_template({name: menu.name, items: menu.items});
+    data.menus.forEach( menu => {
+      detail.innerHTML += menudetail_template({name: menu.name, items: data[menu.name] });
     });
 
     // Make first tab active
