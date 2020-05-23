@@ -31,6 +31,10 @@ function getMenus() {
   request.open('POST', `/menus`);
   request.onload = () => {
     const data = JSON.parse(request.responseText);
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
 
     // Create tabs
     tabs = document.querySelector("#tabs")

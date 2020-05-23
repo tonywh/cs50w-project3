@@ -17,7 +17,7 @@ class Category(models.Model):
 #
 class SubExtra(models.Model):
     name = models.CharField(max_length=128)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f"{self.name}"
@@ -27,7 +27,7 @@ class SubExtra(models.Model):
 #
 class Product(models.Model):
     name = models.CharField(max_length=128)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     categories = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class Product(models.Model):
 #
 class Sub(models.Model):
     name = models.CharField(max_length=128)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f"{self.name}"
@@ -59,11 +59,11 @@ class PizzaTopping(models.Model):
 #
 class Pizza(models.Model):
     name = models.CharField(max_length=128)
-    price0 = models.FloatField()
-    price1 = models.FloatField()
-    price2 = models.FloatField()
-    price3 = models.FloatField()
-    priceSpecial = models.FloatField()
+    price0 = models.DecimalField(max_digits=5, decimal_places=2)
+    price1 = models.DecimalField(max_digits=5, decimal_places=2)
+    price2 = models.DecimalField(max_digits=5, decimal_places=2)
+    price3 = models.DecimalField(max_digits=5, decimal_places=2)
+    priceSpecial = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
         return f"{self.name}"
