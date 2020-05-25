@@ -28,6 +28,7 @@ class SubExtra(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=128)
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    description = models.CharField(max_length=1024)
     categories = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
@@ -41,6 +42,7 @@ class Product(models.Model):
 class Sub(models.Model):
     name = models.CharField(max_length=128)
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    description = models.CharField(max_length=1024)
 
     def __str__(self):
         return f"{self.name}"
@@ -59,6 +61,7 @@ class PizzaTopping(models.Model):
 #
 class Pizza(models.Model):
     name = models.CharField(max_length=128)
+    description = models.CharField(max_length=1024)
     price0 = models.DecimalField(max_digits=5, decimal_places=2)
     price1 = models.DecimalField(max_digits=5, decimal_places=2)
     price2 = models.DecimalField(max_digits=5, decimal_places=2)

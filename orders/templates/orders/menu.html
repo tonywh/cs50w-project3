@@ -21,22 +21,16 @@
             <span class="menu-price">from {{ this.price0 }}</span><br>
           {{/if}}
           <div class="menu-detail" value="{{@root.name}}-{{this.name}}" style="display:none">
+            <p class="menu-description">{{ description }}</p>
+            {{#if options}}
+              {{#each options}}
+                <input type="checkbox" class="item-option" name="{{ this.name }}" value="{{ this.name }}">
+                <label for="{{ this.name }}">{{ this.name }}</label><br>
+              {{/each}}
+            {{/if}}
           </div>
         {{/each}}
       </div>
-    {% endverbatim %}
-  </script>
-
-  <script id="itemdetail" type="text/x-handlebars-template">
-    {% verbatim %}
-      <p class="menu-description">{{ description }}</p>
-      {{#if options}}
-        <span class="options-title">{{ options.title }}</span>
-        {{#each options.names}}
-          <input type="checkbox" class="item-option" name="{{ this }}" value="{{ this }}">
-          <label for="{{ this }}">{{ this }}</label><br>
-        {{/each}}
-      {{/if}}
     {% endverbatim %}
   </script>
 

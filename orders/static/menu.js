@@ -1,6 +1,5 @@
 const menutab_template = Handlebars.compile(document.querySelector('#menutab').innerHTML);
 const menudetail_template = Handlebars.compile(document.querySelector('#menudetail').innerHTML);
-const itemdetail_template = Handlebars.compile(document.querySelector('#itemdetail').innerHTML);
 
 document.addEventListener('DOMContentLoaded', () => {
   getMenus();
@@ -32,10 +31,16 @@ function showItem(itemValue) {
   document.querySelectorAll('.menu-detail').forEach( item => {
     if ( item.getAttribute("value") == itemValue ) {
       item.style.display = "inline";
+      console.log(item);
     } else {
       item.style.display = "none";
     }
   });
+}
+
+function htmlDecode(input) {
+  var doc = new DOMParser().parseFromString(input, "text/html");
+  return doc.documentElement.textContent;
 }
 
 function getMenus() {
@@ -62,12 +67,11 @@ function getMenus() {
       detail.innerHTML += menudetail_template({name: menu.name, items: data[menu.name] });
     });
 
-    // Set up menu items
-    document.querySelectorAll('.menu-detail').forEach( item => {
-      // Create menu item detail
-      item.innerHTML = itemdetail_template({description: "Add description here" });
+    // Unescape the menu item descriptions
+    document.querySelectorAll('.menu-description').forEach( item => {
+      item.innerHTML = htmlDecode(item.innerHTML);
     });
-
+    
     // Create menu item onclick listeners
     document.querySelectorAll('.menu-link').forEach( item => {
       item.onclick = function() {

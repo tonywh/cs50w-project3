@@ -47,10 +47,18 @@ def menus(request):
     return JsonResponse(data, safe=False)
 
 def getPizzaDetails():
-    return list(Pizza.objects.values())
+    result = list(Pizza.objects.values())
+    toppings = list(PizzaTopping.objects.values())
+    for item in result:
+        item["options"] = toppings
+    return result
 
 def getSubsDetails():
-    return list(Sub.objects.values())
+    result = list(Sub.objects.values())
+    extras = list(SubExtra.objects.values())
+    for item in result:
+        item["options"] = extras
+    return result
 
 def getProductDetails(category):
     return list(Product.objects.filter(categories__name=category).values())
