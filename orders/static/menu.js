@@ -1,5 +1,6 @@
 const menutab_template = Handlebars.compile(document.querySelector('#menutab').innerHTML);
 const menudetail_template = Handlebars.compile(document.querySelector('#menudetail').innerHTML);
+const itemdetail_template = Handlebars.compile(document.querySelector('#itemdetail').innerHTML);
 
 document.addEventListener('DOMContentLoaded', () => {
   getMenus();
@@ -26,6 +27,17 @@ function showTab(tabName) {
 
 }
 
+function showItem(itemValue) {
+  // Display the selected item content and undisplay all the rest
+  document.querySelectorAll('.menu-detail').forEach( item => {
+    if ( item.getAttribute("value") == itemValue ) {
+      item.style.display = "inline";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
 function getMenus() {
   const request = new XMLHttpRequest();
   request.open('POST', `/menus`);
@@ -48,6 +60,19 @@ function getMenus() {
     detail.innerHTML = "";
     data.menus.forEach( menu => {
       detail.innerHTML += menudetail_template({name: menu.name, items: data[menu.name] });
+    });
+
+    // Set up menu items
+    document.querySelectorAll('.menu-detail').forEach( item => {
+      // Create menu item detail
+      item.innerHTML = itemdetail_template({description: "Add description here" });
+    });
+
+    // Create menu item onclick listeners
+    document.querySelectorAll('.menu-link').forEach( item => {
+      item.onclick = function() {
+        showItem( this.getAttribute("value") );
+      };
     });
 
     // Make first tab active

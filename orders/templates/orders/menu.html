@@ -14,19 +14,34 @@
     {% verbatim %}
       <div class="tab-detail" value="{{ name }}">
         {{#each items}}
-          <a href="#" value="{{ this.id }}">{{ this.name }}</a>
+          <a href="#" class="menu-link" value="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
           {{#if this.price}}
             <span class="menu-price">{{ this.price }}</span><br>
           {{else}}
             <span class="menu-price">from {{ this.price0 }}</span><br>
           {{/if}}
+          <div class="menu-detail" value="{{@root.name}}-{{this.name}}" style="display:none">
+          </div>
         {{/each}}
       </div>
     {% endverbatim %}
   </script>
 
-  <script src="{% static "menu.js" %}"></script>
+  <script id="itemdetail" type="text/x-handlebars-template">
+    {% verbatim %}
+      <p class="menu-description">{{ description }}</p>
+      {{#if options}}
+        <span class="options-title">{{ options.title }}</span>
+        {{#each options.names}}
+          <input type="checkbox" class="item-option" name="{{ this }}" value="{{ this }}">
+          <label for="{{ this }}">{{ this }}</label><br>
+        {{/each}}
+      {{/if}}
+    {% endverbatim %}
+  </script>
 
+  <script src="{% static "menu.js" %}"></script>
+  
 {% endblock %}
 
 {% block body %}
