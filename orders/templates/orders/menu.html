@@ -14,20 +14,30 @@
     {% verbatim %}
       <div class="tab-detail" value="{{ name }}">
         {{#each items}}
-          <a href="#" class="menu-link" value="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
-          {{#if this.price}}
-            <span class="menu-price">{{ this.price }}</span><br>
-          {{else}}
-            <span class="menu-price">from {{ this.price0 }}</span><br>
-          {{/if}}
-          <div class="menu-detail" value="{{@root.name}}-{{this.name}}" style="display:none">
-            <p class="menu-description">{{ description }}</p>
-            {{#if options}}
-              {{#each options}}
-                <input type="checkbox" class="item-option" name="{{ this.name }}" value="{{ this.name }}">
-                <label for="{{ this.name }}">{{ this.name }}</label><br>
-              {{/each}}
+          <div class="menu-item">
+            <a href="#" class="menu-link" value="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
+            {{#if this.price}}
+              <span class="menu-price">{{ this.price }}</span>
+              <br>
+            {{else}}
+              <span class="menu-price" data-count="0">{{ this.price0 }}</span>
+              <span class="menu-price" data-count="1" style="display:none">{{ this.price1 }}</span>
+              <span class="menu-price" data-count="2" style="display:none">{{ this.price2 }}</span>
+              <span class="menu-price" data-count="3" style="display:none">{{ this.price3 }}</span>
+              <span class="menu-price" data-count="5" style="display:none">{{ this.priceSpecial }}</span>
+              <br>
+              <span class="special-warning-4" style="display:none; color:red">Select one more topping for "Special"</span>
+              <span class="special-warning-6" style="display:none; color:red">Too many toppings. Max 5 please.</span>
             {{/if}}
+            <div class="menu-detail" value="{{@root.name}}-{{this.name}}" style="display:none">
+              <p class="menu-description">{{ description }}</p>
+              {{#if options}}
+                {{#each options}}
+                  <input type="checkbox" class="item-option" name="{{ this.name }}" value="{{ this.name }}">
+                  <label for="{{ this.name }}">{{ this.name }}</label><br>
+                {{/each}}
+              {{/if}}
+            </div>
           </div>
         {{/each}}
       </div>

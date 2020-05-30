@@ -31,16 +31,47 @@ function showItem(itemValue) {
   document.querySelectorAll('.menu-detail').forEach( item => {
     if ( item.getAttribute("value") == itemValue ) {
       item.style.display = "inline";
-      console.log(item);
     } else {
       item.style.display = "none";
     }
   });
 }
 
+// input: escaped HTML
+// return: raw HTML
 function htmlDecode(input) {
   var doc = new DOMParser().parseFromString(input, "text/html");
   return doc.documentElement.textContent;
+}
+
+function showPizzaPrice(item) {
+  numSelected = getNumOptionsSelected(item);
+  item.querySelectorAll(".menu-price").forEach( price => {
+    if ( price.dataset.count == numSelected ) {
+      price.style.display = "inline";
+    } else {
+      price.style.display = "none";
+    }
+    item.querySelector(".special-warning-4").style.display = "none";
+    item.querySelector(".special-warning-6").style.display = "none";
+    if ( numSelected == 4 ) {
+      item.querySelector(".special-warning-4").style.display = "inline";
+    }
+    if ( numSelected > 5 ) {
+      item.querySelector(".special-warning-6").style.display = "inline";
+    }
+  });
+}
+
+function getNumOptionsSelected(item) {
+  count = 0;
+  item.querySelectorAll(".item-option").forEach( option => {
+    if ( option.checked == true ) {
+      count++;
+    }
+  });
+
+  return count;
 }
 
 function getMenus() {
@@ -76,6 +107,13 @@ function getMenus() {
     document.querySelectorAll('.menu-link').forEach( item => {
       item.onclick = function() {
         showItem( this.getAttribute("value") );
+      };
+    });
+
+    // Create item-option onclick listeners
+    document.querySelectorAll('.item-option').forEach( option => {
+      option.onclick = function() {
+        showPizzaPrice(option.closest('.menu-item'));
       };
     });
 
