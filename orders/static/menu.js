@@ -35,6 +35,16 @@ function showItem(name) {
       item.style.display = "none";
     }
   });
+
+  // Display the selected item Add to Cart button
+  document.querySelectorAll('.menu-item').forEach( item => {
+    if ( item.dataset.name == name ) {
+      item.querySelector('button').style.display = "inline";
+    } else {
+      item.querySelector('button').style.display = "none";
+    }
+  });
+  document.querySelector
 }
 
 // input: escaped HTML
@@ -54,11 +64,14 @@ function showPizzaPrice(item) {
     }
     item.querySelector(".special-warning-4").style.display = "none";
     item.querySelector(".special-warning-6").style.display = "none";
+    item.querySelector('button').disabled = false;
     if ( numSelected == 4 ) {
       item.querySelector(".special-warning-4").style.display = "inline";
+      item.querySelector('button').disabled = true;
     }
     if ( numSelected > 5 ) {
       item.querySelector(".special-warning-6").style.display = "inline";
+      item.querySelector('button').disabled = true;
     }
   });
 }
