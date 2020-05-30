@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   getMenus();
 })
 
-function showTab(tabName) {
+function showTab(name) {
   // Make all tabs inactive except the selected tab
   document.querySelectorAll('#tabs .nav-link').forEach( item => {
-    if ( item.getAttribute("value") == tabName ) {
+    if ( item.dataset.name == name ) {
       item.classList.add("active");
     } else {
       item.classList.remove("active");
@@ -17,7 +17,7 @@ function showTab(tabName) {
 
   // Display the selected tab content and undisplay all the rest
   document.querySelectorAll('.tab-detail').forEach( item => {
-    if ( item.getAttribute("value") == tabName ) {
+    if ( item.dataset.name == name ) {
       item.style.display = "inline";
     } else {
       item.style.display = "none";
@@ -26,10 +26,10 @@ function showTab(tabName) {
 
 }
 
-function showItem(itemValue) {
+function showItem(name) {
   // Display the selected item content and undisplay all the rest
   document.querySelectorAll('.menu-detail').forEach( item => {
-    if ( item.getAttribute("value") == itemValue ) {
+    if ( item.dataset.name == name ) {
       item.style.display = "inline";
     } else {
       item.style.display = "none";
@@ -106,7 +106,7 @@ function getMenus() {
     // Create menu item onclick listeners
     document.querySelectorAll('.menu-link').forEach( item => {
       item.onclick = function() {
-        showItem( this.getAttribute("value") );
+        showItem( this.dataset.name );
       };
     });
 
@@ -118,12 +118,12 @@ function getMenus() {
     });
 
     // Make first tab active
-    showTab(document.querySelector('#tabs .nav-link').getAttribute("Value"));
+    showTab(document.querySelector('#tabs .nav-link').dataset.name);
 
     // Set the tab onclick listeners
     document.querySelectorAll('#tabs .nav-link').forEach( item => {
       item.onclick = function() {
-        showTab( this.getAttribute("value") );
+        showTab( this.dataset.name );
       };
     });
   };

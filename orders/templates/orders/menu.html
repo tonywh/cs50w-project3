@@ -6,16 +6,16 @@
 
   <script id="menutab" type="text/x-handlebars-template">
     {% verbatim %}
-      <a class="nav-item nav-link" value="{{ name }}" href="#">{{ name }}</a>
+      <a class="nav-item nav-link" data-name="{{ name }}" href="#">{{ name }}</a>
     {% endverbatim %}
   </script>
 
   <script id="menudetail" type="text/x-handlebars-template">
     {% verbatim %}
-      <div class="tab-detail" value="{{ name }}">
+      <div class="tab-detail" data-name="{{ name }}">
         {{#each items}}
           <div class="menu-item">
-            <a href="#" class="menu-link" value="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
+            <a href="#" class="menu-link" data-name="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
             {{#if this.price}}
               <span class="menu-price">{{ this.price }}</span>
               <br>
@@ -29,11 +29,11 @@
               <span class="special-warning-4" style="display:none; color:red">Select one more topping for "Special"</span>
               <span class="special-warning-6" style="display:none; color:red">Too many toppings. Max 5 please.</span>
             {{/if}}
-            <div class="menu-detail" value="{{@root.name}}-{{this.name}}" style="display:none">
+            <div class="menu-detail" data-name="{{@root.name}}-{{this.name}}" style="display:none">
               <p class="menu-description">{{ description }}</p>
               {{#if options}}
                 {{#each options}}
-                  <input type="checkbox" class="item-option" name="{{ this.name }}" value="{{ this.name }}">
+                  <input type="checkbox" class="item-option" name="{{ this.name }}" data-name="{{ this.name }}">
                   <label for="{{ this.name }}">{{ this.name }}</label><br>
                 {{/each}}
               {{/if}}
