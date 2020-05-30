@@ -63,6 +63,17 @@ function showPizzaPrice(item) {
   });
 }
 
+function showSubsPrice(item) {
+  priceElement = item.querySelector(".menu-price");
+  price = parseFloat(priceElement.dataset.price);
+  item.querySelectorAll(".item-option").forEach( option => {
+    if ( option.checked == true ) {
+      price += parseFloat(option.dataset.price);
+    }
+  });
+  priceElement.innerHTML = price.toFixed(2);
+}
+
 function getNumOptionsSelected(item) {
   count = 0;
   item.querySelectorAll(".item-option").forEach( option => {
@@ -111,10 +122,24 @@ function getMenus() {
     });
 
     // Create item-option onclick listeners
-    document.querySelectorAll('.item-option').forEach( option => {
-      option.onclick = function() {
-        showPizzaPrice(option.closest('.menu-item'));
-      };
+    document.querySelectorAll('.tab-detail').forEach( menu => {
+
+      if ( menu.dataset.name == "Pizza" ) {
+        menu.querySelectorAll('.item-option').forEach( option => {
+          option.onclick = function() {
+            showPizzaPrice(option.closest('.menu-item'));
+          };
+        });
+      }
+
+      if ( menu.dataset.name == "Subs" ) {
+        menu.querySelectorAll('.item-option').forEach( option => {
+          option.onclick = function() {
+            showSubsPrice(option.closest('.menu-item'));
+          };
+        });
+      }
+
     });
 
     // Make first tab active

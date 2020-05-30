@@ -17,7 +17,7 @@
           <div class="menu-item">
             <a href="#" class="menu-link" data-name="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
             {{#if this.price}}
-              <span class="menu-price">{{ this.price }}</span>
+              <span class="menu-price" data-price="{{this.price}}">{{this.price}}</span>
               <br>
             {{else}}
               <span class="menu-price" data-count="0">{{ this.price0 }}</span>
@@ -33,7 +33,7 @@
               <p class="menu-description">{{ description }}</p>
               {{#if options}}
                 {{#each options}}
-                  <input type="checkbox" class="item-option" name="{{ this.name }}" data-name="{{ this.name }}">
+                  <input type="checkbox" class="item-option" name="{{ this.name }}" data-name="{{ this.name }}" data-price="{{this.price}}">
                   <label for="{{ this.name }}">{{ this.name }}</label><br>
                 {{/each}}
               {{/if}}
