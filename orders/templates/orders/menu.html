@@ -14,7 +14,7 @@
     {% verbatim %}
       <div class="tab-detail" data-name="{{ name }}">
         {{#each items}}
-          <div class="menu-item" data-name="{{@root.name}}-{{this.name}}">
+          <div class="menu-item" data-name="{{@root.name}}-{{this.name}}" data-order="{{this.name}}">
             <a href="#" class="menu-link" data-name="{{@root.name}}-{{this.name}}">{{ this.name }}</a>
             {{#if this.price}}
               <span class="menu-price" data-price="{{this.price}}">{{this.price}}</span>

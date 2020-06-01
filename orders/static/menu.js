@@ -98,6 +98,74 @@ function getNumOptionsSelected(item) {
   return count;
 }
 
+function addPizzaToCart(item) {
+  product = item.dataset.order;
+  options = "cheese only";
+  count = 0;
+  item.querySelectorAll(".item-option").forEach( option => {
+    if ( option.checked == true ) {
+      if ( count == 0 ) {
+        options = "";
+      } else {
+        options += ", ";
+      }
+      options += option.dataset.name;
+      count++;
+    }
+  });
+  item.querySelectorAll(".menu-price").forEach( menuprice => {
+    if ( menuprice.style.display != "none" ) {
+      price = menuprice.innerHTML;
+    }
+  });
+  addToCart(product, options, price);
+}
+
+function addSubToCart(item) {
+  product = item.dataset.order;
+  options = "";
+  count = 0;
+  item.querySelectorAll(".item-option").forEach( option => {
+    if ( option.checked == true ) {
+      if ( count == 0 ) {
+        options = "+ ";
+      } else {
+        options += ", ";
+      }
+      options += option.dataset.name;
+      count++;
+    }
+  });
+  item.querySelectorAll(".menu-price").forEach( menuprice => {
+    if ( menuprice.style.display != "none" ) {
+      price = menuprice.innerHTML;
+    }
+  });
+  addToCart(product, options, price);
+}
+
+function addProductToCart(item) {
+  product = item.dataset.order;
+  options = "";
+  price = item.querySelector(".menu-price").innerHTML;
+  addToCart(product, options, price);
+}
+
+function addToCart(product, options, price) {
+  console.log( product + ": " + options + ": " + price );
+  const request = new XMLHttpRequest();
+  request.open('POST', `/cart`);
+  request.onload = () => {
+  };
+  csrftoken = Cookies.get('csrftoken');
+  request.setRequestHeader("X-CSRFToken", csrftoken);
+  const data = new FormData();
+  data.append('product', product);
+  data.append('options', options);
+  data.append('price', price);
+  request.send(data);
+}
+
 function getMenus() {
   const request = new XMLHttpRequest();
   request.open('POST', `/menus`);
@@ -135,6 +203,7 @@ function getMenus() {
     });
 
     // Create item-option onclick listeners
+    // and Add to Cart button onclick listeners
     document.querySelectorAll('.tab-detail').forEach( menu => {
 
       if ( menu.dataset.name == "Pizza" ) {
@@ -143,16 +212,29 @@ function getMenus() {
             showPizzaPrice(option.closest('.menu-item'));
           };
         });
-      }
-
-      if ( menu.dataset.name == "Subs" ) {
+        menu.querySelectorAll('button').forEach( option => {
+          option.onclick = function() {
+            addPizzaToCart(option.closest('.menu-item'));
+          };
+        });
+      } else if ( menu.dataset.name == "Subs" ) {
         menu.querySelectorAll('.item-option').forEach( option => {
           option.onclick = function() {
             showSubsPrice(option.closest('.menu-item'));
           };
         });
+        menu.querySelectorAll('button').forEach( option => {
+          option.onclick = function() {
+            addSubToCart(option.closest('.menu-item'));
+          };
+        });
+      } else {
+        menu.querySelectorAll('button').forEach( option => {
+          option.onclick = function() {
+            addProductToCart(option.closest('.menu-item'));
+          };
+        });
       }
-
     });
 
     // Make first tab active

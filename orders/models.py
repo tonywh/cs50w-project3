@@ -72,44 +72,11 @@ class Pizza(models.Model):
         return f"{self.name}"
 
 #
-# Model for a Pizza item in an order.
-# Rows in this table are Pizza items in an order
-#
-class PizzaItem(models.Model):
-    pizza = models.ForeignKey(Pizza, on_delete=models.PROTECT)
-    toppings = models.ManyToManyField(PizzaTopping, blank=True)
-
-    def __str__(self):
-        return f"{self.pizza.name}"
-
-#
-# Model for a Sub item in an order.
-# Rows in this table are Sub items in an order
-#
-class SubItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    extras = models.ManyToManyField(SubExtra, blank=True)
-
-    def __str__(self):
-        return f"{self.sub.name}"
-
-#
-# Model for a Simple item in an order.
-# Rows in this table are simple items in an order, i.e. any type of item that
-# has no options.
-#
-class SimpleItem(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return f"{self.item.name}"
-
-#
 # Model for an Order. One-to-many relationship with OrderItem.
 #
 class Order(models.Model):
     user = models.ForeignKey(User,  on_delete=models.PROTECT)
-    time = models.DateTimeField()
+    time = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.id} {self.time} {self.user}"
@@ -117,13 +84,12 @@ class Order(models.Model):
 #
 # Items that are part of an order.
 # Rows in this table are items in an order.
-# In each row, leave all ...Item fields blank except one.
 #
 class OrderItem(models.Model):
-    pizzaItem = models.ForeignKey(PizzaItem, blank=True, null=True, on_delete=models.PROTECT)
-    subItem = models.ForeignKey(SubItem, blank=True, null=True, on_delete=models.PROTECT)
-    simpleItem = models.ForeignKey(SimpleItem, blank=True, null=True, on_delete=models.PROTECT)
+    product = models.CharField(max_length=128)
+    options = models.CharField(max_length=128)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="items")
 
     def __str__(self):
-        return f"{self.pizzaItem} {self.subItem} {self.simpleItem} "
+        return f"{self.product} {self.options} {self.price}"

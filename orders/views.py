@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 
-from .models import Order, OrderItem, PizzaItem, SubItem, SimpleItem, Pizza, PizzaTopping, Sub, Product, SubExtra, Category
+from .models import Order, OrderItem, Pizza, PizzaTopping, Sub, Product, SubExtra, Category
 
 def index(request):
     if not request.user.is_authenticated:
@@ -62,3 +62,13 @@ def getSubsDetails():
 
 def getProductDetails(category):
     return list(Product.objects.filter(categories__name=category).values())
+
+def cart(request):
+    cart, created = Order.objects.get_or_create(user=request.user, time__isnull=True)
+    if request.method == "POST":
+        product = request.POST.get("product","")
+        options = request.POST.get("options","")
+        price = request.POST.get("price","")
+        OrderItem.objects.create(product=product, options=options, price=price, order=cart );
+    data = { "Items": list(OrderItem.objects.filter(order=cart).values()) }
+    return JsonResponse(data, safe=False)
