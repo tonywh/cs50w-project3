@@ -88,6 +88,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.CharField(max_length=128)
     options = models.CharField(max_length=128)
+    quantity = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="items")
 

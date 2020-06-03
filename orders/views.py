@@ -64,11 +64,36 @@ def getProductDetails(category):
     return list(Product.objects.filter(categories__name=category).values())
 
 def cart(request):
+    print(request.method)
     cart, created = Order.objects.get_or_create(user=request.user, time__isnull=True)
     if request.method == "POST":
-        product = request.POST.get("product","")
-        options = request.POST.get("options","")
-        price = request.POST.get("price","")
-        OrderItem.objects.create(product=product, options=options, price=price, order=cart );
-    data = { "Items": list(OrderItem.objects.filter(order=cart).values()) }
+        # POST should be with product, options and price
+        # or with qty and id.
+        # Try to get them all then test which succeeded.
+        product = request.POST.get("product")
+        options = request.POST.get("options")
+        price = request.POST.get("price")
+        qty = request.POST.get("qty")
+        id = request.POST.get("id")
+        if product and options and price:
+            # Add new item
+            OrderItem.objects.create(product=product, options=options, quantity= 1, price=price, order=cart )
+        elif id:
+            # Change item quantity
+            item = OrderItem.objects.get(id=id)
+            if (item):
+                if (qty=="0"):
+                    item.delete()
+                else:
+                    item.quantity = qty
+                    item.save()
+
+    # return the cart
+    data = { "items": list(OrderItem.objects.filter(order=cart).values()) }
     return JsonResponse(data, safe=False)
+
+def cartview(request):
+    context = {
+        "user": request.user
+    }
+    return render(request, "orders/cartview.html", context)

@@ -155,8 +155,6 @@ function addToCart(product, options, price) {
   console.log( product + ": " + options + ": " + price );
   const request = new XMLHttpRequest();
   request.open('POST', `/cart`);
-  request.onload = () => {
-  };
   csrftoken = Cookies.get('csrftoken');
   request.setRequestHeader("X-CSRFToken", csrftoken);
   const data = new FormData();
