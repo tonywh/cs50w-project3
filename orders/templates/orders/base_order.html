@@ -1,0 +1,41 @@
+{% extends "orders/base.html" %}
+
+{% block head %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static "base_order.css" %}">
+
+  <script id="orderitems" type="text/x-handlebars-template">
+    {% verbatim %}
+      <table>
+        <tr>
+          <th>Item</th>
+          <th>Options</th>
+          <th>Qty</th>
+          <th>Cost</th>
+        </tr>
+        {{#each items}}
+          <tr>
+            <td class="product">{{this.product}}</td>
+            <td class="options">{{this.options}}</td>
+            <td class="quantity">
+              <form class="update-qty">
+                <input type="submit" class="update" style="visibility: hidden" value="Update">
+                <input type="number" name="qty" class="qty" min="0" data-qty="{{this.quantity}}" value="{{this.quantity}}">
+                <input type="hidden" name="id" value="{{this.id}}">
+              </form>
+            </td>
+            <td class="price">{{this.total}}</td>
+          </tr>
+        {{/each}}
+        <tr>
+          <td colspan="3">TOTAL</td>
+          <td id="ordertotal">{{total}}</td>
+        </tr>
+      </table>
+    {% endverbatim %}
+  </script>
+
+  {% block headextend %}
+  {% endblock headextend%}
+
+{% endblock head%}

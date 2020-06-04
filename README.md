@@ -17,9 +17,9 @@ It is currently a work in progress.
 * Add item to cart
 * Display and update cart
 * Checkout
+* Navigation
 
 ## Still to do
-* Navigation
 * Add descriptions to products
 * Order status display
 * Admin view of orders

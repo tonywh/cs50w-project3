@@ -1,4 +1,5 @@
-const cartitems_template = Handlebars.compile(document.querySelector('#cartitems').innerHTML);
+const orderitems_template = Handlebars.compile(document.querySelector('#orderitems').innerHTML);
+const checkout_template = Handlebars.compile(document.querySelector('#checkout').innerHTML);
 const cartempty_template = Handlebars.compile(document.querySelector('#cartempty').innerHTML);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,7 +50,8 @@ function listCart(ev) {
     item.total = formatter.format(subtotal);
     total += subtotal;
   });
-  cart.innerHTML = cartitems_template({items: data.items, total: formatter.format(total) });
+  cart.innerHTML = orderitems_template({items: data.items, total: formatter.format(total) });
+  cart.innerHTML += checkout_template();
 
   document.querySelectorAll(".quantity").forEach( quantity => {
 
@@ -68,11 +70,11 @@ function listCart(ev) {
   });
 
   // Set checkout action for the Checkout button
-  document.querySelector("#checkout").onclick = checkout;
+  document.querySelector("#checkoutbtn").onclick = checkout;
 };
 
 function checkout() {
-  total = document.querySelector("#carttotal").innerHTML;
+  total = document.querySelector("#ordertotal").innerHTML;
   Swal.fire({
     title: 'Checkout',
     text: 'Place order now? Cost ' + total,
