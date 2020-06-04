@@ -14,11 +14,14 @@ It is currently a work in progress.
 * Sub building and price display
 * Salads
 * Platters
+* Add item to cart
+* Display and update cart
+* Checkout
 
 ## Still to do
-* Add item to cart
-* Display cart
-* Checkout
+* In add to cart: test for duplicate existing items
+* Navigation
+* Add descriptions to products
 * Order status display
 * Admin view of orders
 * Admin update order status

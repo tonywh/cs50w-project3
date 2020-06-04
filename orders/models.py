@@ -75,8 +75,21 @@ class Pizza(models.Model):
 # Model for an Order. One-to-many relationship with OrderItem.
 #
 class Order(models.Model):
+    CART = 1
+    QUEUED = 2
+    PROCESSING = 3
+    READY = 4
+    COMPLETE = 5
+    STATUS = (
+        (CART,          'cart'),
+        (QUEUED,        'queued'),
+        (PROCESSING,    'processing'),
+        (READY,         'ready for collection'),
+        (COMPLETE,      'complete'),
+    )
     user = models.ForeignKey(User,  on_delete=models.PROTECT)
     time = models.DateTimeField(blank=True, null=True)
+    status = models.IntegerField(choices=STATUS, default=CART)
 
     def __str__(self):
         return f"{self.id} {self.time} {self.user}"

@@ -32,7 +32,12 @@
           <td id="carttotal">{{total}}</td>
         </tr>
       </table>
+      <button id="checkout">Checkout</button>
     {% endverbatim %}
+  </script>
+
+  <script id="cartempty" type="text/x-handlebars-template">
+    <span id="empty">Your shopping cart is empty</span>
   </script>
 
   <script src="{% static "cartview.js" %}"></script>

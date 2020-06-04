@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
+from datetime import datetime
 
 from .models import Order, OrderItem, Pizza, PizzaTopping, Sub, Product, SubExtra, Category
 
@@ -64,8 +65,7 @@ def getProductDetails(category):
     return list(Product.objects.filter(categories__name=category).values())
 
 def cart(request):
-    print(request.method)
-    cart, created = Order.objects.get_or_create(user=request.user, time__isnull=True)
+    cart, created = Order.objects.get_or_create(user=request.user, status=Order.CART)
     if request.method == "POST":
         # POST should be with product, options and price
         # or with qty and id.
@@ -75,7 +75,7 @@ def cart(request):
         price = request.POST.get("price")
         qty = request.POST.get("qty")
         id = request.POST.get("id")
-        if product and options and price:
+        if product and price:
             # Add new item
             OrderItem.objects.create(product=product, options=options, quantity= 1, price=price, order=cart )
         elif id:
@@ -97,3 +97,12 @@ def cartview(request):
         "user": request.user
     }
     return render(request, "orders/cartview.html", context)
+
+def order(request):
+    if request.method == "POST":
+        cart = Order.objects.get(user=request.user, status=Order.CART)
+        cart.time = datetime.now()
+        cart.status = Order.QUEUED
+        cart.save()
+        data = { "orderId": cart.id }
+        return JsonResponse(data, safe=False)
