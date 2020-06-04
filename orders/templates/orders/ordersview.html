@@ -1,0 +1,31 @@
+{% extends "orders/base_order.html" %}
+
+{% block headextend %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static "ordersview.css" %}">
+
+  <script id="orderheading" type="text/x-handlebars-template">
+    {% verbatim %}
+      <h3 class="ordertitle">{{title}}</h3>
+      <span class="orderstatus">Order status: {{status}}</span>
+    {% endverbatim %}
+  </script>
+
+  <script id="noorders" type="text/x-handlebars-template">
+    <span id="empty">You have no orders yet.</span>
+  </script>
+
+  <script src="{% static "ordersview.js" %}"></script>
+{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Orders</li>
+  </ol>
+</nav>
+<h2 id="orderstitle">Orders</h2>
+<div id="orderscontent">
+</div>
+{% endblock %}

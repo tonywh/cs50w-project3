@@ -106,11 +106,27 @@ def cartview(request):
     }
     return render(request, "orders/cartview.html", context)
 
+def ordersview(request):
+    context = {
+        "user": request.user
+    }
+    return render(request, "orders/ordersview.html", context)
+
 def order(request):
     if request.method == "POST":
+        # Create an order
         cart = Order.objects.get(user=request.user, status=Order.CART)
         cart.time = datetime.now()
         cart.status = Order.QUEUED
         cart.save()
         data = { "orderId": cart.id }
+        return JsonResponse(data, safe=False)
+    else:
+        # Get all this user's orders
+        orders = Order.objects.filter(user=request.user).exclude(status=Order.CART)
+        data = { "orders": list(orders.values()) }
+        for i, order in enumerate(orders.values()):
+            data["orders"][i]["status"] = orders[i].get_status_display()
+            data["orders"][i]["time"] = orders[i].time.strftime("%c")
+            data["orders"][i]["items"] = list(OrderItem.objects.filter(order=orders[i]).values())
         return JsonResponse(data, safe=False)
