@@ -19,7 +19,6 @@ It is currently a work in progress.
 * Checkout
 
 ## Still to do
-* In add to cart: test for duplicate existing items
 * Navigation
 * Add descriptions to products
 * Order status display

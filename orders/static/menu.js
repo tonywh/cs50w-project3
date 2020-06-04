@@ -152,7 +152,6 @@ function addProductToCart(item) {
 }
 
 function addToCart(product, options, price) {
-  console.log( product + ": " + options + ": " + price );
   const request = new XMLHttpRequest();
   request.open('POST', `/cart`);
   request.onload = () => {

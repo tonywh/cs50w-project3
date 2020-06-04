@@ -77,7 +77,15 @@ def cart(request):
         id = request.POST.get("id")
         if product and price:
             # Add new item
-            OrderItem.objects.create(product=product, options=options, quantity= 1, price=price, order=cart )
+            item, created = OrderItem.objects.get_or_create(
+                product=product,
+                options=options,
+                price=price,
+                order=cart,
+                defaults={'quantity': 1} )
+            if not created:
+                item.quantity += 1
+                item.save()
         elif id:
             # Change item quantity
             item = OrderItem.objects.get(id=id)
