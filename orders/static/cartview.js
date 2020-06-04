@@ -58,35 +58,5 @@ function listCart(ev) {
   });
 
   // Set checkout action for the Checkout button
-  document.querySelector("#checkoutbtn").onclick = checkout;
+  document.querySelector("#checkoutbtn").onclick = () => { window.location.href = '/orderconfirm' };
 };
-
-function checkout() {
-  total = document.querySelector("#ordertotal").innerHTML;
-  Swal.fire({
-    title: 'Checkout',
-    text: 'Place order now? Cost ' + total,
-    allowOutsideClick: false,
-    showCancelButton: true,
-    confirmButtonText: "Confirm",
-  }).then((status) => {
-    console.log(confirm);
-    if (status.isConfirmed) {
-      const request = new XMLHttpRequest();
-      request.open('POST', `/order`);
-      request.onload = () => {
-        const data = JSON.parse(request.responseText);
-        Swal.fire(
-          'Thank you.',
-          'Your order number is ' + data.orderId.toString() + '.',
-          'success'
-        ).then(() => {
-          window.location.href = '/';
-        });
-      };
-      csrftoken = Cookies.get('csrftoken');
-      request.setRequestHeader("X-CSRFToken", csrftoken);
-      request.send();
-    }
-  });
-}

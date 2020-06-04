@@ -106,6 +106,12 @@ def cartview(request):
     }
     return render(request, "orders/cartview.html", context)
 
+def orderconfirm(request):
+    context = {
+        "user": request.user
+    }
+    return render(request, "orders/orderconfirm.html", context)
+
 def ordersview(request):
     context = {
         "user": request.user
@@ -123,7 +129,7 @@ def order(request):
         return JsonResponse(data, safe=False)
     else:
         # Get all this user's orders
-        orders = Order.objects.filter(user=request.user).exclude(status=Order.CART)
+        orders = Order.objects.filter(user=request.user).exclude(status=Order.CART).order_by("-time")
         data = { "orders": list(orders.values()) }
         for i, order in enumerate(orders.values()):
             data["orders"][i]["status"] = orders[i].get_status_display()

@@ -1,0 +1,25 @@
+{% extends "orders/base_order.html" %}
+
+{% block headextend %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static "cartview.css" %}">
+
+  <script id="confirm" type="text/x-handlebars-template">
+    <button id="confirmbtn">Buy now</button>
+  </script>
+
+  <script src="{% static "orderconfirm.js" %}"></script>
+{% endblock %}
+
+{% block body %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="/cartview">Shopping cart</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Review items and payment</li>
+  </ol>
+</nav>
+<h2 id="carttitle">Review items and payment</h2>
+<div id="cartcontent">
+</div>
+{% endblock %}

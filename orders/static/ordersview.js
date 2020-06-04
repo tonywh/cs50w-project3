@@ -27,7 +27,7 @@ function listOrders(ev) {
 
   orders.innerHTML = "";
   data.orders.forEach( order => {
-    orders.innerHTML += orderheading_template({title: order.time.toLocaleString(), status: order.status});
+    orders.innerHTML += orderheading_template({title: order.time.toLocaleString(), id: order.id, status: order.status});
     orders.innerHTML += createOrderItems(order.items, false);
   });
 };
