@@ -1,4 +1,3 @@
-const orderitems_template = Handlebars.compile(document.querySelector('#orderitems').innerHTML);
 const checkout_template = Handlebars.compile(document.querySelector('#checkout').innerHTML);
 const cartempty_template = Handlebars.compile(document.querySelector('#cartempty').innerHTML);
 
@@ -31,10 +30,6 @@ function updateQty(e) {
 function listCart(ev) {
   request = ev.target;
   const data = JSON.parse(request.responseText);
-  var formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  });
 
   cart = document.querySelector("#cartcontent")
 
@@ -43,14 +38,7 @@ function listCart(ev) {
     return;
   }
 
-  // Create items
-  total = 0;
-  data.items.forEach( item => {
-    subtotal = parseFloat(item.price) * parseFloat(item.quantity);
-    item.total = formatter.format(subtotal);
-    total += subtotal;
-  });
-  cart.innerHTML = orderitems_template({items: data.items, total: formatter.format(total) });
+  cart.innerHTML = createOrderItems(data.items, true);
   cart.innerHTML += checkout_template();
 
   document.querySelectorAll(".quantity").forEach( quantity => {

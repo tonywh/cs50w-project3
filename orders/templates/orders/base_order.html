@@ -18,11 +18,15 @@
             <td class="product">{{this.product}}</td>
             <td class="options">{{this.options}}</td>
             <td class="quantity">
-              <form class="update-qty">
-                <input type="submit" class="update" style="visibility: hidden" value="Update">
-                <input type="number" name="qty" class="qty" min="0" data-qty="{{this.quantity}}" value="{{this.quantity}}">
-                <input type="hidden" name="id" value="{{this.id}}">
-              </form>
+              {{#if ../change}}
+                <form class="update-qty">
+                  <input type="submit" class="update" style="visibility: hidden" value="Update">
+                  <input type="number" name="qty" class="qty" min="0" data-qty="{{this.quantity}}" value="{{this.quantity}}">
+                  <input type="hidden" name="id" value="{{this.id}}">
+                </form>
+              {{else}}
+                <span class="qty">"{{this.quantity}}"</span>
+              {{/if}}
             </td>
             <td class="price">{{this.total}}</td>
           </tr>
@@ -34,6 +38,8 @@
       </table>
     {% endverbatim %}
   </script>
+
+  <script src="{% static "base_order.js" %}"></script>
 
   {% block headextend %}
   {% endblock headextend%}
