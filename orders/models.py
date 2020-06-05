@@ -12,6 +12,9 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    class Meta:
+        verbose_name_plural = '7: Product Categories'
+
 #
 # Model for Sub extras
 #
@@ -21,6 +24,9 @@ class SubExtra(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        verbose_name_plural = '5: Subs Extras'
 
 #
 # Model to characterise simple products
@@ -33,6 +39,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        verbose_name_plural = '6: Other Products'
 
 #
 # Model to characterise subs.
@@ -47,6 +56,10 @@ class Sub(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    class Meta:
+        verbose_name_plural = '4: Subs'
+
+
 #
 # Model for pizza toppings
 #
@@ -55,6 +68,9 @@ class PizzaTopping(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        verbose_name_plural = '3: Pizza Toppings'
 
 #
 # Model to characterise pizzas
@@ -70,6 +86,9 @@ class Pizza(models.Model):
 
     def __str__(self):
         return f"{self.name}"
+
+    class Meta:
+        verbose_name_plural = '2: Pizzas'
 
 #
 # Model for an Order. One-to-many relationship with OrderItem.
@@ -92,7 +111,10 @@ class Order(models.Model):
     status = models.IntegerField(choices=STATUS, default=CART)
 
     def __str__(self):
-        return f"{self.id} {self.time} {self.user}"
+        return f"{self.id}"
+
+    class Meta:
+        verbose_name_plural = '1: Orders'
 
 #
 # Items that are part of an order.
@@ -103,7 +125,7 @@ class OrderItem(models.Model):
     options = models.CharField(max_length=128)
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name="items")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
 
     def __str__(self):
-        return f"{self.product} {self.options} {self.price}"
+        return ""

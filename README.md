@@ -19,8 +19,8 @@ It is currently a work in progress.
 * Checkout
 * Navigation
 * Order status display
+* Admin view of orders and update of status
 
 ## Still to do
 * Add descriptions to products
-* Admin view of orders and update of status
 * Make it all pretty with animated CSS
