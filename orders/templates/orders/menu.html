@@ -25,16 +25,18 @@
               <span class="menu-price" data-count="3" style="display:none">{{ this.price3 }}</span>
               <span class="menu-price" data-count="5" style="display:none">{{ this.priceSpecial }}</span>
             {{/if}}
-            <button class="add-to-cart" style="display:none">Add to Cart</button>
             <br>
+            <button class="add-to-cart" style="display:none">Add to Cart</button>
             <span class="special-warning-4" style="display:none; color:red">Select one more topping for "Special"</span>
             <span class="special-warning-6" style="display:none; color:red">Too many toppings. Max 5 please.</span>
             <div class="menu-detail" data-name="{{@root.name}}-{{this.name}}" style="display:none">
               <p class="menu-description">{{ description }}</p>
               {{#if options}}
                 {{#each options}}
-                  <input type="checkbox" class="item-option" name="{{ this.name }}" data-name="{{ this.name }}" data-price="{{this.price}}">
-                  <label for="{{ this.name }}">{{ this.name }}</label><br>
+                  <label class="custom-checkbox">{{ this.name }}
+                    <input type="checkbox" class="item-option" name="{{ this.name }}" data-name="{{ this.name }}" data-price="{{this.price}}">
+                    <span class="checkmark"></span>
+                  </label>
                 {{/each}}
               {{/if}}
             </div>

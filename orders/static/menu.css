@@ -1,0 +1,102 @@
+.nav-pills .nav-link.active, .nav-pills .nav-link.active:hover {
+  background-color: #ff0000!important;
+}
+
+.nav-pills .nav-link:hover {
+  color: white;
+  background-color: #ff8080!important;
+}
+
+.menu-item {
+  padding: 5px 20px 5px 20px;
+}
+
+.menu-link, .menu-price {
+  font-size: 1.3em;
+}
+
+.menu-price {
+  float: right;
+}
+
+.add-to-cart {
+  float: right;
+}
+
+.menu-link {
+  color: #014101!important;
+}
+
+.menu-link:hover {
+  color: #00d800!important;
+  text-decoration: none;
+}
+
+/*
+ * Customise the tick marks
+ */
+ .custom-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.custom-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #025f02;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.custom-checkbox .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 9px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 4px 4px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
