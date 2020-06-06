@@ -29,7 +29,7 @@ function showTab(name) {
 function showItem(name) {
   // Display the selected item content and undisplay all the rest
   document.querySelectorAll('.menu-detail').forEach( item => {
-    if ( item.dataset.name == name ) {
+    if ( item.dataset.name == name  && item.style.display == "none" ) {
       item.style.display = "inline";
     } else {
       item.style.display = "none";
@@ -38,10 +38,11 @@ function showItem(name) {
 
   // Display the selected item Add to Cart button
   document.querySelectorAll('.menu-item').forEach( item => {
-    if ( item.dataset.name == name ) {
-      item.querySelector('button').style.display = "inline";
+    button = item.querySelector('button');
+    if ( item.dataset.name == name && button.style.display == "none" ) {
+      button.style.display = "inline";
     } else {
-      item.querySelector('button').style.display = "none";
+      button.style.display = "none";
     }
   });
   document.querySelector
@@ -198,7 +199,10 @@ function getMenus() {
     // Create menu item onclick listeners
     document.querySelectorAll('.menu-link').forEach( item => {
       item.onclick = function() {
+        y = document.documentElement.scrollTop;
         showItem( this.dataset.name );
+        document.documentElement.scrollTop = y;
+        return false;
       };
     });
 

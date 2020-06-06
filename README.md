@@ -22,5 +22,4 @@ It is currently a work in progress.
 * Admin view of orders and update of status
 
 ## Still to do
-* Add descriptions to products
 * Make it all pretty with animated CSS

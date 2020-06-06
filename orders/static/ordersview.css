@@ -1,0 +1,21 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.col-item {
+  width: 30%
+}
+
+.col-options {
+  width: 50%;
+}
+
+.col-qty {
+  width: 10%;
+}
+
+.col-cost {
+  width: 10%;
+}
+

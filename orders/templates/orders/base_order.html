@@ -7,6 +7,12 @@
   <script id="orderitems" type="text/x-handlebars-template">
     {% verbatim %}
       <table>
+        <colgroup>
+          <col class="col-item" />
+          <col class="col-options" />
+          <col class="col-qty" />
+          <col class="col-cost" />
+        </colgroup>
         <tr>
           <th>Item</th>
           <th>Options</th>
@@ -36,6 +42,7 @@
           <td id="ordertotal">{{total}}</td>
         </tr>
       </table>
+      <br>
     {% endverbatim %}
   </script>
 
