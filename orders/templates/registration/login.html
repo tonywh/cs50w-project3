@@ -1,4 +1,4 @@
-{% extends "orders/base.html" %}
+{% extends "orders/base_login.html" %}
 
 {% block body %}
 
@@ -15,6 +15,9 @@
 {% endif %}
 {% endif %}
 
+Welcome to Tonio's Pizza and Subs.<br>
+Please Login or Register to continue.<br>
+<br>
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 <table>
@@ -30,7 +33,7 @@
 <input type="submit" value="Login" />
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
+<br>
 Not registered yet? <a href="{% url 'register' %}">Register here</a>
 
 {% endblock %}
