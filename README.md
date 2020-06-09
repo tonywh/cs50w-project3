@@ -6,7 +6,7 @@ Web Programming with Python and JavaScript.
 This is Antony Whittam's submission for Project 3 of the CS50W Harvard - EdX course. It is an online shopping demo applicatiion for a Pizza and Subs takeaway.
 
 ## Demo
-...
+[Watch a screencast demo here.](https://youtu.be/hG94QJA3Ky8)
 
 ## Files
 In this list to avoid clutter I have omitted the files that are similar in many Django projects. 
