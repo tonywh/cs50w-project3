@@ -20,6 +20,10 @@ class OrderAdmin(admin.ModelAdmin):
     fields = ( ('status', 'time', 'user'), )
     readonly_fields = ['time', 'user']
 
+    # Exclude 'cart' status. Order by status
+    def get_queryset(self, request):
+        return super().get_queryset(request).exclude(status=Order.CART).order_by('status')
+
     def has_add_permission(self, request):
         return False
 
