@@ -15,6 +15,9 @@ It focuses instead on the files that contain code or data specific to this proje
 | File               | Dir               | Content/Purpose             |
 | -----------------  | ----------------- | --------------------------- |
 | db.sqlite3         | .                             | The SQLite database
+| admin.py           | orders                        | Admin site config code
+| models.py          | orders                        | Models for database tables
+| views.py           | orders                        | HTML creation and data access
 | *.css              | orders/static                 | Styling for html file of the same name
 | *.js               | orders/static                 | Javascript for html file of the same name
 | various images     | orders/static                 | Icons and background for various pages 
